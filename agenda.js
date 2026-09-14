@@ -80,7 +80,7 @@ formulario.addEventListener("submit", (evento) => {
 
   if (horarioOcupado(consultas, nova)) {
     mensagem.textContent = "erro";
-    formulario.reset();
+    //formulario.reset();
     return;
   }
 
