@@ -47,6 +47,14 @@ function horarioOcupado(consultas, nova) {
   );
 }
 
+function remover(index) {
+  const consultas = carregar();
+  consultas.splice(index, 1);
+  salvar(consultas);
+  renderizar();
+  mensagem.textContent = "Consulta cancelada.";
+}
+
 function renderizar() {
   const consultas = carregar().sort((a, b) =>
     (a.data + a.hora).localeCompare(b.data + b.hora)
@@ -55,15 +63,15 @@ function renderizar() {
   lista.innerHTML = "";
 
   if (consultas.length === 0) {
-    lista.innerHTML = '<tr><td colspan="4" class="vazio">Nenhuma consulta agendada.</td></tr>';
+    lista.innerHTML = '<tr><td colspan="5" class="vazio">Nenhuma consulta agendada.</td></tr>';
     return;
   }
 
-  for (const c of consultas) {
+  consultas.forEach((c, index) => {
     const linha = document.createElement("tr");
-    linha.innerHTML = `<td>${c.data}</td><td>${c.hora}</td><td>${c.profissional}</td><td>${c.paciente}</td>`;
+    linha.innerHTML = `<td>${c.data}</td><td>${c.hora}</td><td>${c.profissional}</td><td>${c.paciente}</td><td><button onclick="remover(${index})">Cancelar</button></td>`;
     lista.appendChild(linha);
-  }
+  });
 }
 
 formulario.addEventListener("submit", (evento) => {
